@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Car Tamagoshi</title>
+        <link id="css" rel="stylesheet" type="text/css" href="cssdomenu.css"/>
+    </head>
+    <body>
+        <div id="screen">
+            <h1 class="titulo">CAR GAME</h1>
+            <div class="container">
+                <div class="formulario">
+                    <img id="gatoArma" src="imagens/download-removebg-preview.png" alt="">
+                    <p>SELECIONE SEU GATO:</p><br>
+                    <form id="cat-form">
+                        <label>
+                            Digite o nome:
+                            <input type="text" id="selnome" name="selnome" required>
+                        </label>
+
+                        <label>
+                            Cor do Gato:
+                            <select required id="selcor">
+                                <option value="Cinza" selected="selected">Cinza</option>
+                                <option value="Preto">Preto</option>
+                                <option value="Branco">Branco</option>
+                                <option value="Rosa">Rosa</option>
+                                <option value="Amarelo">Amarelo</option>
+                                <option value="Orange">Orange</option>
+                                <option value="Vermelho">Vermelho</option>
+                                <option value="Roxo">Roxo</option>
+                                <option value="Azul">Azul</option>
+                                <option value="Verde">Verde</option>
+                            </select>
+                        </label>
+                    </form>
+                </div>
+                <button type="button" onclick="iniciar()">START GAME</button>
+            </div>
+        </div>
+
+        <div id="cacada"></div>
+
+        <div id="loja"></div>
+
+        <div id="popup"></div>
+
+        <div id="menu"></div>
+
+        <div id="velorio"></div>
+
+        <div id="sono"></div>
+
+            <script>
+                id = 0;
+                tempcen = parseInt(2);
+
+                cacateste = 1;
+                acaoteste = 1;
+                lojateste = 1;
+
+                sujo = 0;
+                paroutudo = 0;
+
+                const car = {
+                    nome: "Tamagoshi",
+                    idade: parseFloat(0),
+                    estagio: parseInt(1),
+                    fome: parseInt(100),
+                    saude: parseInt(100),
+                    higiene: parseInt(100),
+                    felicidade: parseInt(100),
+                    sono: parseInt(0),
+                    cor: "Cinza",
+                    estado: "",
+                    chapeu: parseInt(-1),
+                    traje: parseInt(-1),
+                    cenario: 2,
+                    ratos: parseInt(0),
+                    obito: parseInt(0),
+                    ratostotais: parseInt(0),
+                    comprastotais: parseInt(0),
+                    cafunesrecebidos: parseInt(0),
+                    itens: [parseInt(0), parseInt(0), parseInt(0), parseInt(0), parseInt(0), parseInt(0), parseInt(0), parseInt(0), parseInt(0), parseInt(0), parseInt(0), parseInt(0), parseInt(0), parseInt(0)],
+                    //0-Ração 1-Ração_Premium 2-Peixe 3-Amoxicilina 4-Vacina_Quintupla 5-catnip 6-13-Roupas
+                    //0-5 = quantidade variável
+                    //6-13 = 0 ou 1
+                    itemBlock: [parseInt(0), parseInt(1), parseInt(1), parseInt(1), parseInt(1), parseInt(0), parseInt(1), parseInt(1)],
+                    //0-Laço_Vermelho 1-Fone 2-Brinco 3-Fedora 4-Coroa 5-Pijama 6-Rock 7-Terno
+                }
+                
+                function trocarD()
+                {
+                    if(acaoteste == 1)
+                    {
+                        registrarAcao("Troca de Cenário à direita");
+                        if(car.cenario==1)
+                        {
+                            car.cenario = 2;
+                            document.getElementById("fundo").src = `imagens/fundo${car.cenario}.png`;
+                            document.getElementById("botoesbaixo").innerHTML = `
+                            <button class="btn" onclick="cafune()"><img src="imagens/iconecafune.png"><img/button>
+                            `;
+                            tempcen = car.cenario;
+                        }
+                        else if(car.cenario==2)
+                        {
+                            car.cenario = 3;
+                            document.getElementById("fundo").src = `imagens/fundo${car.cenario}.png`;
+                            document.getElementById("botoesbaixo").innerHTML = `
+                            <button onclick="comer()"><img src="imagens/iconecomer.png"></button>
+                            `;
+                            tempcen = car.cenario;
+                        }
+                        else if(car.cenario==3)
+                        {
+                            car.cenario = 4;
+                            document.getElementById("fundo").src = `imagens/fundo${car.cenario}.png`;
+                            document.getElementById("botoesbaixo").innerHTML = `
+                            <button onclick="lavar()"><img src="imagens/iconelavar.png"></button>
+                            `;
+                            tempcen = car.cenario;
+                        }
+                        else if(car.cenario==4)
+                        {
+                            car.cenario = 5;
+                            document.getElementById("fundo").src = `imagens/fundo${car.cenario}.png`;
+                            document.getElementById("botoesbaixo").innerHTML = `
+                            <button onclick="remedios()"><img src="imagens/iconeremedio.png"></button>
+                            `;
+                            document.getElementById("cadeira").src = `imagens/cadeira.png`;
+                            tempcen = car.cenario;
+                        }
+                        else if(car.cenario==5)
+                        {
+                            car.cenario = 1;
+                            document.getElementById("fundo").src = `imagens/fundo${car.cenario}.png`;
+                            document.getElementById("botoesbaixo").innerHTML = `
+                            <button onclick="armario()"><img src="imagens/iconearmario.png"></button>
+                            <button onclick="dormir()"><img src="imagens/iconemimir.png"></button>
+                            `;
+                            document.getElementById("cadeira").src = ``;
+                            tempcen = car.cenario;
+                        }
+                        else{
+                            alert("Algum erro ocorreu.");
+                        }
+                    }
+                }
+
+                function trocarE()
+                {
+                    if(acaoteste == 1)
+                    {
+                        registrarAcao("Troca de Cenário à Esquerda");
+                        if(car.cenario==3)
+                        {
+                            car.cenario = 2;
+                            document.getElementById("fundo").src = `imagens/fundo${car.cenario}.png`;
+                            document.getElementById("botoesbaixo").innerHTML = `
+                            <button class="btn" onclick="cafune()"><img src="imagens/iconecafune.png"><img/button>
+                            `;
+                            tempcen = car.cenario;
+                        }
+                        else if(car.cenario==4)
+                        {
+                            car.cenario = 3;
+                            document.getElementById("fundo").src = `imagens/fundo${car.cenario}.png`;
+                            document.getElementById("botoesbaixo").innerHTML = `
+                            <button onclick="comer()"><img src="imagens/iconecomer.png"></button>
+                            `;
+                            tempcen = car.cenario;
+                        }
+                        else if(car.cenario==5)
+                        {
+                            car.cenario = 4;
+                            document.getElementById("fundo").src = `imagens/fundo${car.cenario}.png`;
+                            document.getElementById("botoesbaixo").innerHTML = `
+                            <button onclick="lavar()"><img src="imagens/iconelavar.png"></button>
+                            `;
+                            
+                            document.getElementById("cadeira").src = ``;
+                            tempcen = car.cenario;
+                            
+                        }
+                        else if(car.cenario==1)
+                        {
+                            car.cenario = 5;
+                            document.getElementById("fundo").src = `imagens/fundo${car.cenario}.png`;
+                            document.getElementById("botoesbaixo").innerHTML = `
+                            <button onclick="remedios()"><img src="imagens/iconeremedio.png"></button>
+                            `;
+                            document.getElementById("cadeira").src = `imagens/cadeira.png`;
+                            tempcen = car.cenario;
+                        }
+                        else if(car.cenario==2)
+                        {
+                            car.cenario = 1;
+                            document.getElementById("fundo").src = `imagens/fundo${car.cenario}.png`;
+                            document.getElementById("botoesbaixo").innerHTML = `
+                            <button onclick="armario()"><img src="imagens/iconearmario.png"></button>
+                            <button onclick="dormir()"><img src="imagens/iconemimir.png"></button>
+                            `;
+                            tempcen = car.cenario;
+                        }
+                        else{
+                            alert("Algum erro ocorreu.");
+                        }
+                    }
+                }
+
+                function quitInventario(){
+                    document.getElementById("popup").innerHTML = "";
+                    registrarAcao("Encerramento do Inventário");
+                }
+                
+                function consumir(item)
+                {
+                    registrarAcao('Inicialização de "consumir(item)"');
+
+                    document.getElementById("popup").innerHTML = "";
+                    car.itens[item]--;
+                    switch(item)
+                    {
+                        case 0:
+                            car.fome += 10;
+                            if(car.fome > 100)
+                            {
+                                car.fome = 100;
+                            }
+                            document.getElementById("fill1").style.width = `${car.fome}%`;
+                            registrarAcao("Ração Comida");
+                            break;
+                        case 1:
+                            car.fome += 25;
+                            if(car.fome > 100)
+                            {
+                                car.fome = 100;
+                            }
+                            document.getElementById("fill1").style.width = `${car.fome}%`;
+                            registrarAcao("Ração Premium Comida");
+                            break;
+                        case 2:
+                            car.fome += 30;
+                            if(car.fome > 100)
+                            {
+                                car.fome = 100;
+                            }
+                            car.felicidade += 50;
+                            if(car.felicidade > 100)
+                            {
+                                car.felicidade = 100;
+                            }
+                            document.getElementById("fill1").style.width = `${car.fome}%`;
+                            document.getElementById("fill4").style.width = `${car.felicidade}%`;
+                            registrarAcao("Peixe Comido");
+                            break;
+                        case 3:
+                            car.saude += 15;
+                            if(car.saude > 100)
+                            {
+                                car.saude = 100;
+                            }
+                            document.getElementById("fill2").style.width = `${car.saude}%`;
+                            registrarAcao("Amoxicilina Tomada");
+                            break;
+                        case 4:
+                            car.saude = 100;
+                            clearInterval(saude);
+                            document.getElementById("fill2").style.width = `${car.saude}%`;
+                            registrarAcao("Vacina Quintupla Tomada");
+                            break;
+                        case 5:
+                            car.felicidade = 100;
+                            clearInterval(felicidade);
+                            document.getElementById("fill4").style.width = `${car.felicidade}%`;
+                            registrarAcao("Catnip Ingerido");
+                            break;
+                        
+                    }
+                }
+
+                function comer()
+                {
+                        var pobreza = 1;
+                        var itemName;
+
+                        registrarAcao('Inicialização de "comer()"');
+
+                        document.getElementById("popup").innerHTML = `
+                        <div id="popupcontainer">
+                            <button id="sairinv" onclick="quitInventario()"><img style="width: 135%;" src="imagens/iconesair.png"></button>
+                            <div id="itens">
+                            </div>
+                        </div>
+                        `
+                        registrarAcao('Popup de "comer()"');
+
+                        for(var i = 0; i<3; i++)
+                        {
+                            switch(i)
+                            {
+                                case 0:
+                                    itemName = "Ração";
+                                    break;
+                                case 1:
+                                    itemName = "Ração Premium";
+                                    break;
+                                case 2:
+                                    itemName = "Peixe :3";
+                                    break;
+                            }
+                            if(car.itens[i] > 0)
+                            {
+                                document.getElementById("itens").innerHTML += `
+                                <div>
+                                    <p>${itemName} X${car.itens[i]}</p>
+                                    <img src="imagens/Itens/${i}.png">
+                                    <button class="botaoLegal" onclick="consumir(${i})">Comer</button>
+                                </div>
+                                `
+                                pobreza = 0;
+                            }
+                        }
+                        registrarAcao('Carregamento de todos os itens');
+                        if(pobreza == 1)
+                        {
+                            document.getElementById("itens").innerHTML += `
+                            <p><br/>Você não tem nada.<br/>;(</p>
+                            `
+
+                            registrarAcao('Confirmação da inexistência de itens');
+                        }
+                }
+
+                function remedios()
+                {
+                    var pobreza = 1;
+                    var itemName;
+
+                    registrarAcao('Inicialização de "remedios()"');
+
+                    document.getElementById("popup").innerHTML = `
+                    <div id="popupcontainer">
+                        <button id="sairinv" onclick="quitInventario()"><img style="width: 135%;" src="imagens/iconesair.png"></button>
+                        <div id="itens">
+                        </div>
+                    </div>
+                    `
+                    registrarAcao('Popup de "remedios()"');
+
+                    for(var i = 3; i<6; i++)
+                    {
+                        switch(i)
+                        {
+                            case 3:
+                                itemName = "Amoxicilina";
+                                break;
+                            case 4:
+                                itemName = "Vacina Quintupla";
+                                break;
+                            case 5:
+                                itemName = "Catnip";
+                                break;
+                        }
+                        if(car.itens[i] > 0)
+                        {
+                            document.getElementById("itens").innerHTML += `
+                            <div>
+                                <p>${itemName} X${car.itens[i]}</p>
+                                <img src="imagens/Itens/${i}.png">
+                                <button class="botaoLegal" onclick="consumir(${i})">Tomar</button>
+                            </div>
+                            `
+                            pobreza = 0;
+                        }
+                    }
+                    registrarAcao('Carregamento de todos os itens');
+                    if(pobreza == 1)
+                    {
+                        document.getElementById("itens").innerHTML += `
+                        <p><br/>Você não tem nada.<br/>;(</p>
+                        `
+                        registrarAcao('Confirmação da inexistência de itens');
+                    }
+                }
+
+                function vestir(rp)
+                {
+                    registrarAcao('Inicialização de "vestir(rp)"');
+                    document.getElementById("popup").innerHTML = "";
+                    if(rp >= 6 && rp <= 10)
+                    {
+                        car.chapeu = rp;
+                        document.getElementById("chapeu").src = `imagens/Cars/Roupas/chapeu${car.chapeu}estagio${car.estagio}.png`;
+                        registrarAcao('Carregamento de Chapéu');
+                    }
+                    else if(rp >= 11 && rp <= 13)
+                    {
+                        car.traje = rp;
+                        document.getElementById("roupa").src = `imagens/Cars/Roupas/traje${car.traje}estagio${car.estagio}.png`
+                        registrarAcao('Carregamento de Traje');
+                    }
+                }
+
+                function despir(rp)
+                {
+                    registrarAcao('Inicialização de "despir(rp)"');
+                    document.getElementById("popup").innerHTML = "";
+                    if(rp >= 6 && rp <= 10)
+                    {
+                        car.chapeu = -1;
+                        document.getElementById("chapeu").src = "";
+                        registrarAcao('Descarregamento de Chapéu');
+                    }
+                    else if(rp >= 11 && rp <= 13)
+                    {
+                        car.traje = -1;
+                        document.getElementById("roupa").src = "";
+                        registrarAcao('Descarregamento de Traje');
+                    }
+                }
+
+                function armario()
+                {
+                    var pobreza = 1;
+                    var itemName;
+
+                    registrarAcao('Inicialização de "armario()"');
+
+                    document.getElementById("popup").innerHTML = `
+                    <div id="popupcontainer">
+                        <button id="sairinv" onclick="quitInventario()"><img style="width: 135%;" src="imagens/iconesair.png"></button>
+                        <div id="itens">
+                        </div>
+                    </div>
+                    `
+                    registrarAcao('Popup de "armario()"');
+
+                    for(var i = 6; i<14; i++)
+                    {
+                        switch(i)
+                        {
+                            case 6:
+                                itemName = "Laço Vermelho";
+                                break;
+                            case 7:
+                                itemName = "Fone de Ouvido";
+                                break;
+                            case 8:
+                                itemName = "Brincos Felinos";
+                                break;
+                            case 9:
+                                itemName = "Chapéu Fedora";
+                                break;
+                            case 10:
+                                itemName = "Coroa";
+                                break;
+                            case 11:
+                                itemName = "Pijama Felino";
+                                break;
+                            case 12:
+                                itemName = "Blusa do Rock";
+                                break;
+                            case 13:
+                                itemName = "Terno Felino";
+                                break;
+
+                        }
+                        if(car.itens[i] == 1)
+                        {
+                            if(i == car.traje || i == car.chapeu)
+                            {
+                                document.getElementById("itens").innerHTML += `
+                                <div>
+                                    <p>${itemName}</p>
+                                    <img src="imagens/Cars/Roupas/roupa${i}.png">
+                                    <button class="botaoPaia" onclick="despir(${i})">Tirar</button>
+                                </div>
+                                `
+                            }
+                            else
+                            {
+                                document.getElementById("itens").innerHTML += `
+                                <div>
+                                    <p>${itemName}</p>
+                                    <img src="imagens/Cars/Roupas/roupa${i}.png">
+                                    <button class="botaoLegal" onclick="vestir(${i})">Vestir</button>
+                                </div>
+                                `
+                            }
+                            pobreza = 0;
+                        }
+                    }
+                    registrarAcao('Carregamento de todos os itens');
+                    if(pobreza == 1)
+                    {
+                        document.getElementById("itens").innerHTML += `
+                        <p><br/>Você não tem nada.<br/>;(</p>
+                        `
+                        registrarAcao('Confirmação da inexistência de itens');
+                    }
+                }
+
+                function eventCar()
+                {
+                    registrarAcao('Inicialização de "eventCar()"');
+                    if(car.cenario == 6 || car.cenario == 7)
+                    {
+                        document.getElementById("cacada").innerHTML = "";
+                        document.getElementById("loja").innerHTML = "";
+                        document.getElementById("popup").innerHTML = "";
+                        car.cenario = tempcen;
+
+                        registrarAcao('"Carregamento do Cenário Base"');
+                    }
+                }
+
+                //  ID = "acao"
+                function cafune()
+                {
+                    registrarAcao('Inicialização de "cafune()"');
+                    if (acaoteste==1)
+                    {
+                        acaoteste = 0;
+                        var mao = document.getElementById("acao");
+                        mao.src = `imagens/mao${car.estagio}.png`;
+
+                        car.felicidade += 5;
+                        if(car.felicidade > 100)
+                        {
+                            car.felicidade = 100;
+                        }
+                        document.getElementById("fill4").style.width = `${car.felicidade}%`;
+                        car.cafunesrecebidos++;
+                        registrarAcao('Soma de felicidade de "cafune()"');
+
+                        registrarAcao('Inicialização da animação de "cafune()"');
+                        setTimeout(function(){
+                            mao.style.right = "13%";
+                            setTimeout(function(){
+                                mao.style.right = "15%";
+                                setTimeout(function(){
+                                    mao.style.right = "13%";
+                                    setTimeout(function(){
+                                        mao.style.right = "15%";
+                                        setTimeout(function(){
+                                            mao.src = "";
+                                            acaoteste = 1;
+                                            registrarAcao('Fim da inicialização de "cafune()"');
+                                        }, 150);
+                                    }, 150);
+                                }, 150);
+                            }, 150);
+                        }, 150);
+                    }
+                }
+
+                function lavar()
+                {
+                    registrarAcao('Inicialização de "lavar()"');
+                    if (acaoteste==1)
+                    {
+                        acaoteste = 0;
+                        var esponja = document.getElementById("acao");
+                        esponja.src = `imagens/esponja${car.estagio}.png`;
+
+                        car.higiene += 10;
+                        if(car.higiene > 100)
+                        {
+                            car.higiene = 100;
+                        }
+                        document.getElementById("fill3").style.width = `${car.higiene}%`;
+                        registrarAcao('Soma de Higiene de "lavar()"');
+
+                        registrarAcao('Inicialização da animação de "lavar()"');
+                        setTimeout(function(){
+                            esponja.style.right = "13%";
+                            setTimeout(function(){
+                                esponja.style.right = "15%";
+                                setTimeout(function(){
+                                    esponja.style.right = "13%";
+                                    setTimeout(function(){
+                                        esponja.style.right = "15%";
+                                        setTimeout(function(){
+                                            esponja.src = "";
+                                            acaoteste = 1;
+                                            if(car.higiene > 20 && sujo == 1)
+                                            {
+                                                sujo = 0;
+                                                document.getElementById("sujo").src = "";
+                                                registrarAcao('Fim da animação de "lavar()"');
+                                            }
+                                        }, 150);
+                                    }, 150);
+                                }, 150);
+                            }, 150);
+                        }, 150);
+                    }
+                }
+
+                function eventCacar()
+                {
+                    registrarAcao('Inicialização de "eventCacar()"');
+                    if(car.cenario != 6)
+                    {
+                        document.getElementById("popup").innerHTML = "";
+                        if(car.cenario == 7)
+                        {
+                            document.getElementById("loja").innerHTML = "";
+                        }
+                        car.cenario = 6;
+                        document.getElementById("cacada").innerHTML = `
+                        <img id="cacadafundo" src="imagens/chaodacozinha.png">
+                        <span id="ratocontainer">
+                            <button id="rato" onclick="patada()">
+                                <img id="ratoimg" src="imagens/ratinho.png">
+                                
+                            </button>
+                        </span>
+                        <span id="patacontainer">
+                            <div id="pata">
+                                <img id="pataimg" src="imagens/Cars/Patas/patada${car.cor}.png">
+                            </div>
+                        </span>
+                        `;
+
+                        document.getElementById("rato").style.top = `${parseInt(Math.random() * 50 + 10)}%`;
+                        document.getElementById("rato").style.right = `${parseInt(Math.random() * 50 + 10)}%`;
+                        
+                        document.getElementById("pata").style.right = `200%`;
+                        document.getElementById("pata").style.top = `200%`;
+
+                        document.getElementById("ratoimg").style.rotate = `z ${parseInt(Math.random() * 360)}deg`;
+
+                        cacateste = 1;
+                        registrarAcao('Carregamento do Cenário Caça');
+                    }
+                }
+
+                function patada()
+                {
+                    registrarAcao('Inicialização de "patada()"');
+                    if (car.felicidade >= 20)
+                    {
+                        if (cacateste==1)
+                        {
+                            cacateste = 0;
+                            var rato = document.getElementById("rato");
+                            var pata = document.getElementById("pata");
+
+                            rato.style.cursor = "default";
+                            document.getElementById("pata").style.right = document.getElementById("rato").style.right;
+                            document.getElementById("pata").style.top = document.getElementById("rato").style.top;
+
+                            car.ratos++;
+                            car.ratostotais++;
+                            document.getElementById("money").innerHTML = `Ratos: ${car.ratos}`;
+                            registrarAcao('Animação de Pata');
+
+                            setTimeout(function(){
+                                rato.style.top = `${parseInt(Math.random() * 50 + 10)}%`;
+                                rato.style.right = `${parseInt(Math.random() * 50 + 10)}%`;
+
+                                document.getElementById("pata").style.right = `200%`;
+                                document.getElementById("pata").style.top = `200%`;
+
+                                document.getElementById("ratoimg").style.rotate = `z ${parseInt(Math.random() * 360)}deg`;
+                                rato.style.cursor = "pointer";
+
+                                cacateste = 1;
+                                registrarAcao('Fim da animação de Pata');
+                            }, 350)
+                        }
+                    }
+                    else
+                    {
+                        alert("Seu gato está muito triste para caçar.");
+                        registrarAcao('Rejeição da Patada');
+                    }
+                }
+
+                function eventLoja()
+                {
+                    registrarAcao('Inicialização de "eventLoja()"');
+                    if(car.cenario != 7)
+                    {
+                        document.getElementById("popup").innerHTML = "";
+                        if(car.cenario == 6)
+                        {
+                            document.getElementById("cacada").innerHTML = "";
+                        }
+                        car.cenario = 7;
+                        lojateste = 1;
+
+                        document.getElementById("loja").innerHTML = `
+                        <div id="lojacontainer">
+                            <img id="lojafundo" src="imagens/fundoloja.png">
+
+                            <button onclick="cleiton()" id="btncleiton"></button>
+                            <img id="cleiton" src="imagens/cleitonbase1.png">
+                            <img id="cleitonselect" src="imagens/cleitonbase2.png">
+
+                            <button onclick="catalogo()" id="btncatalog"></button>
+                            <img id="catalog" src="imagens/catalogo1.png">
+                            <img id="catalogselect" src="imagens/catalogo2.png">
+                        </div>
+                        `;
+                        registrarAcao('Carregamento do Cenário Loja');
+                    }
+                }
+
+                function cleiton()
+                {
+                    registrarAcao(`Inicialização de "cleiton()"`);
+                    var dec = parseInt(Math.random() * 10 + 1);
+                    var aleat = parseInt(Math.random() * 10 + 1);
+                    var fala;
+                    var nec = 0;
+
+                    document.getElementById("cleiton").src = "imagens/cleitonfala1.png";
+                    registrarAcao(`Carregamento de "cleitonfala1.png"`);
+
+                    document.getElementById("popup").innerHTML = `
+                    <div id="popupcontainer2">
+                        <div id="fala">
+                            <strong><p>Se estás a ver isto, algum erro ocorreu no sistem.</p></strong>
+                        </div>
+                        <button onclick="sairDialogo()"></button>
+                    </div>
+                    `
+                    registrarAcao(`Carregamento de Popup de Conversa`);
+
+                    if(car.saude <= 20)
+                    {
+                        nec++;
+                    }
+                    if(car.fome <= 20)
+                    {
+                        nec++;
+                    }
+
+                    if(nec > 0)
+                    {
+                        aleat = parseInt(Math.random() * nec + 1)
+                        if(nec == 1)
+                        {
+                            if(car.saude <=20)
+                            {
+                                fala = "Teu filho parece doente. Você deveria cuidar dele.";   
+                            }
+                            else
+                            {
+                                fala = "Teu filho parece estar com fome. Você deveria comprar algo para ele.";
+                            }
+
+                        }
+                        else
+                        {
+                            switch(aleat)
+                            {
+                                case 1: 
+                                    fala = "Teu filho parece doente. Você deveria cuidar dele."; 
+                                    break;
+                                case 2:
+                                case 3:
+                                    fala = "Teu filho parece estar com fome. Você deveria comprar algo para ele.";
+                                    break;
+                            }
+                        }
+                    }
+                    else if(dec <= 8)
+                    {
+                        switch(aleat)
+                        {
+                            case 1:
+                                fala = "Os meus preços são mais baixos que os dos outros. Só não preciso de tanto lucro...";
+                                break;
+                            case 2:
+                                fala = "Se seu filho ficar triste, Catnip ajudaria...";
+                                break;
+                            case 3:
+                                fala = "A Ração daqui só custa cinco ratos. Ração nunca é demais...";
+                                break;
+                            case 4:
+                                fala = "A Ração Premium daqui custa dez ratos. Bem menor do que os quinze do mercado...";
+                                break;
+                            case 5:
+                                fala = "Peixe realmente é um luxo... Acho que teu filho ficaria bem feliz com um.";
+                                break;
+                            case 6:
+                                fala = "Amoxicilina é barata e boa, mas é bem melhor só vacinar teu filho de tempos em tempos...";
+                                break;
+                            case 7:
+                                fala = "É importante vacinar teu filho...";
+                                break;
+                            case 8:
+                                fala = "Se teu filho for adolescente, eu tenho alguns produtos que ele pode achar legais...";
+                                break;
+                            case 9:
+                                fala = "Tenho um terno em estoque, se teu filho já for moço...";
+                                break;
+                            case 10:
+                            case 11:
+                                fala = "Pijamas são confortáveis. Principalmente para os filhotes...";
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        aleat = parseInt(Math.random() * 6 + 1);
+                        switch(aleat)
+                        {
+                            case 1:
+                                fala = "Sabe...? Eu teria vivido a vida honesta dede o começo. Não faça como eu...";
+                                break;
+                            case 2:
+                                fala = "Filhos... Desde que minha filha nasceu, parece que minha mente se endireitou.";
+                                break;
+                            case 3:
+                                fala = "Você não sabe como soa um grito desesperado de um homem.";
+                                break;
+                            case 4:
+                                fala = "Eu queria estar em casa... com minha filha, Isabela.";
+                                break;
+                            case 5:
+                                fala = "O casamento é muito importante para um Gato... Você deveria comprar um terno para o teu filho quando ele virar moço.";
+                                break;
+                            case 6:
+                            case 7:
+                                fala = "Por que eu fumo...? Era norma no âmbito em que eu trabalhava. Agora é um vício.";
+                                break;
+                        }
+                    }
+                    registrarAcao(`Algoritmo de Escolha de Fala`);
+
+                    document.getElementById("fala").innerHTML = `<strong><p>${fala}</p></strong>`
+                    registrarAcao(`Carregamento da Fala`);
+
+                    lojateste = 0;
+                    registrarAcao(`Inicialização de Cleiton Cooldown (lojateste)`);
+
+                    setTimeout(function(){
+                        lojateste = 1;
+                        registrarAcao(`Fim de Cleiton Cooldown (lojateste)`);
+                    }, 1 * 1000);
+                }
+
+                function sairDialogo()
+                {
+                    if(lojateste == 1)
+                    {
+                        document.getElementById("popup").innerHTML = "";
+                        document.getElementById("cleiton").src = "imagens/cleitonbase1.png"
+                        registrarAcao(`Carregamento de "cleitonbase1.png"`);
+                        registrarAcao(`Fim do Popup`);
+                    }
+                    else
+                    {
+                        registrarAcao(`Falha em encerrar Popup (lojateste)`);
+                    }
+                }
+
+                function catalogo()
+                {
+                    registrarAcao('Inicialização de "catalogo()"');
+                    document.getElementById("popup").innerHTML = `
+                    <div id="popupcontainer">
+                        <div id="opcoes">
+                            <button onclick="prodComida()"><img src="imagens/iconecomer.png"></button>
+                            <button onclick="prodRemedio()"><img src="imagens/iconeremedio.png"></button>
+                            <button onclick="prodRoupa()"><img src="imagens/iconeroupa.png"></button>
+                            <button onclick="quitCatalog()"><img style="width: 135%;" src="imagens/iconesair.png"></button>
+                        </div>
+
+                        <div id="prod">
+                        </div>
+                    </div>
+                    `
+
+                    registrarAcao('Carregamento do Popup Loja');
+                }
+
+                function comprar(produto, preco)
+                {
+                    registrarAcao('Inicialização de "comprar(produto, preco)"');
+                    if(car.ratos >= preco)
+                    {
+                        car.comprastotais++;
+                        car.itens[produto]++;
+                        car.ratos -= preco;
+                        document.getElementById("money").style.background = "#e06352";
+                        setTimeout(function(){
+                            document.getElementById("money").style.background = "#e9e8e8";
+                        }, 200);
+                        registrarAcao('Compra sucedida');
+                    }
+                    else
+                    {
+                        alert("Você não possui ratos o suficiente.");
+                        registrarAcao('Compra não-sucedida');
+                    }
+                    document.getElementById("money").innerHTML = `Ratos: ${car.ratos}`;
+                    registrarAcao('Atualização de Ratos');
+                }
+
+                function prodComida()
+                {
+                    registrarAcao('Inicialização de "prodComida()"');
+                    document.getElementById("prod").innerHTML = `
+                    <button onclick="comprar(0, 5)">
+                        <p class="prodnome">Ração</p>
+                        <img class="prodimagem" src="imagens/Itens/0.png">
+                        <p class="prodpreco">5 RATOS</p>
+                    </button>
+
+                    <button onclick="comprar(1, 10)">
+                        <p class="prodnome">Ração Premium</p>
+                        <img class="prodimagem" src="imagens/Itens/1.png">
+                        <p class="prodpreco">10 RATOS</p>
+                    </button>
+
+                    <button onclick="comprar(2, 15)">
+                        <p class="prodnome">Peixe :)</p>
+                        <img class="prodimagem" src="imagens/Itens/2.png">
+                        <p class="prodpreco">15 RATOS</p>
+                    </button>
+                    `
+                    registrarAcao('Carregamento das Comidas');
+                }
+
+                function prodRemedio()
+                {
+                    registrarAcao('Inicialização de "prodRemedio()"');
+                    document.getElementById("prod").innerHTML = `
+                    <button onclick="comprar(3, 5)">
+                        <p class="prodnome">Amoxicilina</p>
+                        <img class="prodimagem" src="imagens/Itens/3.png">
+                        <p class="prodpreco">5 RATOS</p>
+                    </button>
+
+                    <button onclick="comprar(4, 25)">
+                        <p class="prodnome" style="margin: 2px; margin-top: 2px; width: 100%; height: 20%; font-size: 18px;">Vacina Quintupla</p>
+                        <img class="prodimagem" src="imagens/Itens/4.png">
+                        <p class="prodpreco">25 RATOS</p>
+                    </button>
+
+                    <button onclick="comprar(5, 15)">
+                        <p class="prodnome">Catnip ;)</p>
+                        <img class="prodimagem" src="imagens/Itens/5.png">
+                        <p class="prodpreco">15 RATOS</p>
+                    </button>
+                    `
+                    registrarAcao('Carregamento dos Remédios');
+                }
+
+                function prodRoupa()
+                {
+                    registrarAcao('Inicialização de "prodRoupa()"');
+                    document.getElementById("prod").innerHTML = "";
+                    var preco = parseInt(0);
+                    var nome;
+
+                    for(var i = parseInt(6); i<=13; i++)
+                    {
+                        if(car.itens[i] == 0 && car.itemBlock[i-6] == 0)
+                        {
+                            switch(i)
+                            {
+                                case 6:
+                                    preco = 15;
+                                    nome = "Laço Vermelho";
+                                    break;
+                                case 7:
+                                    preco = 25;
+                                    nome = "Fone de Ouvido";
+                                    break;
+                                case 8:
+                                    preco = 20;
+                                    nome = "Brinco Felino";
+                                    break;
+                                case 9:
+                                    preco = 50;
+                                    nome = "Chapéu Fedora";
+                                    break;
+                                case 10:
+                                    preco = 100;
+                                    nome = "Coroa";
+                                    break;
+                                case 11:
+                                    preco = 35;
+                                    nome = "Pijama Felino";
+                                    break;
+                                case 12:
+                                    preco = 45;
+                                    nome = "Blusa do Rock";
+                                    break;
+                                case 13:
+                                    preco = 75;
+                                    nome = "Terno Felino";
+                                    break;
+                            }
+
+                            document.getElementById("prod").innerHTML += `
+                            
+                            <button id="roupa${i}" onclick="comprarRoupa(${i}, ${preco})">
+                                <p class="prodnome">${nome}</p>
+                                <img class="prodimagem" src="imagens/Cars/Roupas/roupa${i}.png">
+                                <p class="prodpreco">${preco} RATOS</p>
+                            </button>
+                            `
+                        }
+                    }
+                    registrarAcao('Carregamento das Roupas Disponíveis');
+                        
+                }
+
+                function comprarRoupa(produto, preco)
+                {
+                    registrarAcao('Inicialização de "comprarRoupa(produto, preco)"');
+                    if(car.ratos >= preco)
+                    {
+                        car.comprastotais++;
+
+                        car.itens[produto]=1;
+
+                        car.ratos -= preco;
+                        document.getElementById("money").style.background = "#e06352";
+                        setTimeout(function(){
+                            document.getElementById("money").style.background = "#e9e8e8";
+                        }, 200);
+                        document.getElementById(`roupa${produto}`).remove();
+                        registrarAcao('Compra sucedida');
+                    }
+                    else
+                    {
+                        alert("Você não possui ratos o suficiente.");
+                        registrarAcao('Compra não-sucedida');
+                    }
+                    document.getElementById("money").innerHTML = `Ratos: ${car.ratos}`;
+                    registrarAcao('Atualização de Ratos');
+                }
+
+                function quitCatalog()
+                {
+                    registrarAcao('Inicialização de "quitCatalog()"');
+                    document.getElementById("popup").innerHTML = "";
+                    registrarAcao('Encerramento do Catálogo');
+                }
+
+                function tempo()
+                {
+                    registrarAcao('Inicialização de "tempo()"');
+                    //FOME
+                    fome = setInterval(function(){
+                        car.fome -= 1;
+                        document.getElementById("fill1").style.width = `${car.fome}%`;
+                        if(car.fome==0)
+                        {
+                            car.obito = 1;
+                            encerrar();
+                        }
+                    }, 1000 * 5);
+                    //-------------------------------------------------------------------------
+                    //SAUDE
+                    saude = setInterval(function(){
+                        car.saude -= 1;
+                        document.getElementById("fill2").style.width = `${car.saude}%`;
+                        if(car.saude==0)
+                        {
+                            car.obito = 2;
+                            encerrar();
+                        }
+                    }, 1000 * 5);
+                    //-------------------------------------------------------------------------
+                    //HIGIENE
+                    higiene = setInterval(function(){
+                        car.higiene -= 1;
+                        document.getElementById("fill3").style.width = `${car.higiene}%`;
+                        if(car.higiene <= 20 && sujo == 0)
+                        {
+                            sujo = 1;
+                            document.getElementById("sujo").src = `imagens/Cars/sujeira${car.estagio}.png`;
+                        }
+                        else if(car.higiene > 20 && sujo == 1)
+                        {
+                            sujo = 0;
+                            document.getElementById("sujo").src = "";
+                        }
+                        else if(car.higiene < 0)
+                        {
+                            car.higiene = 0;
+                        }
+                    }, 1000 * 5);
+                    //-------------------------------------------------------------------------
+                    //FELICIDADE
+                    felicidade = setInterval(function(){
+                        car.felicidade -= 1;
+                        document.getElementById("fill4").style.width = `${car.felicidade}%`;
+                        if(car.felicidade < 0)
+                        {
+                            car.felicidade = 0;
+                        }
+                    }, 1000 * 5);
+                    //-------------------------------------------------------------------------
+                    //SONO
+                    sono = setInterval(function(){
+                        car.sono += 1;
+                        document.getElementById("fill5").style.width = `${car.sono}%`;
+                        if(car.sono>=70 && car.estado!="Eepy")
+                        {
+                            car.estado = "Eepy";
+                            document.getElementById("thecar").src = `imagens/Cars/${car.cor}${car.estado}${car.estagio}.png`;
+                        }
+                        else if(car.sono<70 && car.estado=="Eepy")
+                        {
+                            car.estado = "";
+                            document.getElementById("thecar").src = `imagens/Cars/${car.cor}${car.estado}${car.estagio}.png`;
+                        }
+                        else if(car.sono>=100)
+                        {
+                            dormir()
+                        }
+                    }, 1500);
+                    registrarAcao(`setInterval's carregados com sucesso`);
+                }
+
+                function pararTempo()
+                {
+                    registrarAcao('Inicialização de "pararTempo()"');
+                    clearInterval(fome);
+                    clearInterval(saude);
+                    clearInterval(higiene);
+                    clearInterval(felicidade);
+                    clearInterval(sono);
+                    registrarAcao(`setInterval's descarregados com sucesso`);
+                }
+
+                function dormir()
+                {
+                    registrarAcao('Inicialização de "dormir()"');
+                    if(car.sono >= 70)
+                    {
+                        eventCar();
+                        pararTempo();
+
+                        if(car.idade < 10)
+                        {
+                            //FILHOTE
+                            car.idade = car.idade + 2;
+                            registrarAcao('Avanço de Idade');
+                            if(car.idade >= 10)
+                            {
+                                paroutudo = 1;
+                                car.estagio = 2;
+                                registrarAcao('Avanço de Estágio');
+                                car.itemBlock = [0, 0, 0, 1, 1, 0, 0, 1];
+                            }
+                        }
+                        else if(car.idade < 20)
+                        {
+                            //ADOLESCENTE
+                            car.idade = car.idade + 2;
+                            registrarAcao('Avanço de Idade');
+                            if(car.idade >= 20)
+                            {
+                                paroutudo = 1;
+                                car.estagio = 3;
+                                registrarAcao('Avanço de Estágio');
+                                car.itemBlock = [0, 0, 0, 0, 0, 0, 0, 0];
+                            }
+                        }
+                        else
+                        {
+                            //ADULTO
+                            car.idade = car.idade + 5;
+                            registrarAcao('Avanço de Idade');
+                            if(car.idade >= 70)
+                            {
+                                paroutudo = 1;
+                            }
+                        }
+
+                        if(paroutudo == 0)
+                        {
+                            registrarAcao('Tela de sono');
+                            document.getElementById("sono").style.display = "flex";
+                            document.getElementById("sono").innerHTML = `
+                            <h1 id="ponto">Dormindo pela noite...</h1>
+                            <button onclick="acordar()">Acordar</button>
+                            `
+                            registrarAcao('setInterval de Pontilhado Carregado');
+                            pontinhos = setInterval(function(){
+                                document.getElementById("ponto").innerHTML="Dormindo pela noite.";
+                                setTimeout(function(){
+                                    document.getElementById("ponto").innerHTML="Dormindo pela noite..";
+                                    setTimeout(function(){
+                                        document.getElementById("ponto").innerHTML="Dormindo pela noite...";
+                                    }, 400);
+                                }, 400);
+                            }, 1200);
+                        }
+                        else if(car.idade >= 70)
+                        {
+                            encerrar();
+                            registrarAcao('Morte');
+                        }
+                        else if(car.idade >= 20)
+                        {
+                            registrarAcao('Mensagem de Crescimento');
+                            document.getElementById("sono").style.display = "flex";
+                            document.getElementById("sono").innerHTML = `
+                            <h1>Seu Felino, ${car.nome}, cresceu. Agora, ele é um adulto.<h1>
+                            <h1 id="ponto">Dormindo pela noite...</h1>
+                            <button onclick="acordar()">Acordar</button>
+                            `
+                            registrarAcao('setInterval de Pontilhado Carregado');
+                            pontinhos = setInterval(function(){
+                                document.getElementById("ponto").innerHTML="Dormindo pela noite.";
+                                setTimeout(function(){
+                                    document.getElementById("ponto").innerHTML="Dormindo pela noite..";
+                                    setTimeout(function(){
+                                        document.getElementById("ponto").innerHTML="Dormindo pela noite...";
+                                    }, 400);
+                                }, 400);
+                            }, 1200);
+                        }
+                        else if(car.idade >= 10)
+                        {
+                            registrarAcao('Mensagem de Crescimento');
+                            document.getElementById("sono").style.display = "flex";
+                            document.getElementById("sono").innerHTML = `
+                            <h1>Seu Felino, ${car.nome}, cresceu. Agora, ele é um adolescente.<h1>
+                            <h1 id="ponto">Dormindo pela noite...</h1>
+                            <button onclick="acordar()">Acordar</button>
+                            `
+                            registrarAcao('setInterval de Pontilhado Carregado');
+                            pontinhos = setInterval(function(){
+                                document.getElementById("ponto").innerHTML="Dormindo pela noite.";
+                                setTimeout(function(){
+                                    document.getElementById("ponto").innerHTML="Dormindo pela noite..";
+                                    setTimeout(function(){
+                                        document.getElementById("ponto").innerHTML="Dormindo pela noite...";
+                                    }, 400);
+                                }, 400);
+                            }, 1200);
+                        }
+                        else
+                        {
+                            alert("Um erro ocorreu.");
+                        }
+                    }
+                    else
+                    {
+                        registrarAcao('Falha em chamar "dormir()" (Falta de Sono)');
+                        alert("Seu felino não está com sono.");
+                    }
+                }
+
+                function acordar()
+                {
+                    registrarAcao('Inicialização de "acordar()"');
+                    document.getElementById("sono").innerHTML = "";
+                    document.getElementById("sono").style.display = "none";
+
+                    car.cenario = tempcen;
+                    document.getElementById("loja").innerHTML = "";
+                    document.getElementById("popup").innerHTML = "";
+                    document.getElementById("cacada").innerHTML = "";
+                    registrarAcao('Retorno do Cenário Base');
+
+                    paroutudo = 0;
+
+                    if(car.sono >= 100)
+                    {
+                        car.sono = 30;   
+                    }
+                    else
+                    {
+                        car.sono = 0;
+                    }
+                    registrarAcao('Reset da Barra de Sono');
+
+                    clearInterval(pontinhos);
+                    registrarAcao('setInterval de Pontilhado Descarregado');
+                    tempo();
+
+                    car.estado = "";
+                    document.getElementById("fill5").style.width = `${car.sono}%`;
+                    document.getElementById("thecar").src = `imagens/Cars/${car.cor}${car.estado}${car.estagio}.png`;
+                    if(car.chapeu != -1)
+                    {
+                        document.getElementById("chapeu").src = `imagens/Cars/Roupas/chapeu${car.chapeu}estagio${car.estagio}.png`;
+                    }
+                    if(car.traje != -1)
+                    {
+                        document.getElementById("roupa").src = `imagens/Cars/Roupas/traje${car.traje}estagio${car.estagio}.png`;
+                    }
+                    if(sujo == 1)
+                    {
+                        document.getElementById("sujo").src = `imagens/Cars/sujeira${car.estagio}.png`;
+                    }
+                    registrarAcao('Atualização Dinâmica de Sprite');
+                }
+                
+                //MORTE
+                function encerrar()
+                {
+                    registrarAcao('Inicialização de "encerrar()"');
+                    pararTempo();
+
+                    document.getElementById("screen").innerHTML = "";
+                    document.getElementById("cacada").innerHTML = "";
+                    document.getElementById("loja").innerHTML = "";
+                    document.getElementById("menu").innerHTML = "";
+                    
+                    document.getElementById("css").href = "cssdovelorio.css"
+                    document.getElementById("velorio").innerHTML = `
+                    <div id="osbaguiodomorto">
+                        <img src="imagens/Cars/${car.cor}${car.estado}${car.estagio}.png">
+                        <br/>
+                        <h1>${car.nome}</h1>
+                        <h2>${car.idade / 10} anos de idade</h2>
+                        <p id="obito"></p>
+                        <button onclick="encerrar2()">Continuar</button>
+                    </div>
+                    `
+                    
+                    if(sujo == 1)
+                    {
+                        document.getElementById("osbaguiodomorto").innerHTML += `<img src="imagens/Cars/sujeira${car.estagio}.png">`;
+                    }
+                    if(car.traje != -1)
+                    {
+                        document.getElementById("osbaguiodomorto").innerHTML += `<img src="imagens/Cars/Roupas/traje${car.traje}estagio${car.estagio}.png">`;
+                    }
+                    if(car.chapeu != -1)
+                    {
+                        document.getElementById("osbaguiodomorto").innerHTML += `<img src="imagens/Cars/Roupas/chapeu${car.chapeu}estagio${car.estagio}.png">`;
+                    }
+                    
+                    if(car.obito == 0)
+                    {
+                        document.getElementById("obito").innerHTML = "Seu felino faleceu. Embora este seja um momento triste, ele viveu bem. Viveu muito e foi bem cuidado. Ele apenas atingiu o limite de sua longevidade como um ser feito de carne. O tempo atinge todos. Seu felino morreu de velhice.";
+                    }
+                    else if(car.obito == 1)
+                    {
+                        document.getElementById("obito").innerHTML = "Seu felino faleceu. Todavia, este é um momento de reflexão. Seu felino sofreu. Ele morreu faminto, isto é, de fome. Cuidar de uma vida é uma grande responsabilidade.";
+                    }
+                    else if(car.obito == 2)
+                    {
+                        document.getElementById("obito").innerHTML = "Seu felino morreu. Todavia, este é um momento de reflexão. Seu felino sofreu. Ele morreu doente, pois tu não cuidaste dele. Cuidar de uma vida é uma grande responsabilidade.";
+                    }
+                    else{
+                        alert("Algum erro ocorreu.")
+                    }
+                }
+
+                function encerrar2(){
+
+                    var fase;
+                    switch(car.estagio)
+                    {
+                        case 1:
+                            fase = "Filhote";
+                            break;
+                        case 2:
+                            fase = "Adolescente";
+                            break;
+                        case 3:
+                            fase = "Adulto";
+                            break;
+                        default:
+                            fase = "Erro!";
+                            break;
+                    }
+
+                    document.getElementById("velorio").innerHTML = `
+                    <div>
+                        <h1 id="nomedocabramorto">${car.nome}</h1>
+
+                        <table>
+                            
+                            <thead>
+                            <tr>
+                                <th colspan="2">Estatísticas</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td><strong>Idade</strong></td>
+                                <td>${car.idade / 10} anos</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fase Final</strong></td>
+                                <td>${fase}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ratos Caçados</strong></td>
+                                <td>${car.ratostotais}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Compras na Loja</strong></td>
+                                <td>${car.comprastotais}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cafunés Recebidos</strong></td>
+                                <td>${car.cafunesrecebidos}</td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+
+                        <button onclick="menu()">Continuar</button>
+                    </div>
+                    `
+                    document.getElementById("nomedocabramorto").style.marginTop = "10px";
+                }
+
+                function menu(){
+                    document.getElementById("css").href = "cssdomenu.css";
+
+                    document.getElementById("velorio").innerHTML = "";
+                    document.getElementById("popup").innerHTML = "";
+                    document.getElementById("loja").innerHTML = "";
+                    document.getElementById("cacada").innerHTML = "";
+                    document.getElementById("menu").innerHTML = "";
+                    document.getElementById("sono").innerHTML = "";
+
+                    document.getElementById("screen").innerHTML = `
+                    <h1 class="titulo">CAR GAME</h1>
+                    <div class="container">
+                        <div class="formulario">
+                            <img id="gatoArma" src="imagens/download-removebg-preview.png" alt="">
+                            <p>SELECIONE SEU GATO:</p><br>
+                            <form id="cat-form">
+                                <label>
+                                    Digite o nome:
+                                    <input type="text" id="selnome" name="selnome" required>
+                                </label>
+
+                                <label>
+                                    Cor do Gato:
+                                    <select required id="selcor">
+                                        <option value="Cinza" selected="selected">Cinza</option>
+                                        <option value="Preto">Preto</option>
+                                        <option value="Branco">Branco</option>
+                                        <option value="Rosa">Rosa</option>
+                                        <option value="Amarelo">Amarelo</option>
+                                        <option value="Orange">Orange</option>
+                                        <option value="Vermelho">Vermelho</option>
+                                        <option value="Roxo">Roxo</option>
+                                        <option value="Azul">Azul</option>
+                                        <option value="Verde">Verde</option>
+                                    </select>
+                                </label>
+                            </form>
+                        </div>
+                        <button type="button" onclick="iniciar()">START GAME</button>
+                    </div>
+                    `;
+
+                }
+
+                function iniciar()
+                {
+                    if(document.getElementById("selnome").value=="")
+                    {
+                        alert("Não foi selecionado um nome para o Tamagochi.");
+                    }
+                    else{
+                        tempcen = parseInt(2);
+
+                        car.ratos = 0;
+                        car.ratostotais = 0;
+                        car.comprastotais = 0;
+                        car.cafunesrecebidos = 0;
+                        car.obito = 0;
+                        car.cor = document.getElementById("selcor").value;
+                        car.nome = document.getElementById("selnome").value;
+                        car.idade = 0.0;
+                        car.estagio = 1;
+                        /*
+                            1 - Bebê
+                                .2 em .2
+                            2 - Adolescente
+                                .2 em .2
+                            3 - Adulto
+                                1 em 1 
+                            
+                                O GATO VIVE ATÉ OS SETE ANOS
+                        */
+                        car.chapeu = -1;
+                        car.traje = -1;
+
+                        car.fome = 60;
+                        car.saude = 60;
+                        car.higiene = 60;
+                        car.felicidade = 60;
+                        car.sono = 0;
+                        /* 0 - 100 */
+
+                        car.estado = "";
+                        /* NULL / Eepy */
+
+                        car.cenario = 2;
+                        /* 1=quarto / 2=sala / 3=cozinha / 4=banheiro / 5=enfermaria / 6=caça / 7=loja */
+
+                        car.itens = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+                        car.itemBlock = [0, 1, 1, 1, 1, 0, 1, 1];
+
+                        sujo = 0;
+                        paroutudo = 0;
+                        cacateste = 1;
+                        acaoteste = 1;
+                        lojateste = 1;
+
+                        document.getElementById("css").href = "cssdojogo.css"
+                        
+                        document.getElementById("screen").innerHTML = `
+                        <img id="fundo" src="imagens/fundo${car.cenario}.png">
+                        <img id="cadeira" src="">
+                        <img id="thecar" class="tamagotchi" src="imagens/Cars/${car.cor}${car.estado}${car.estagio}.png">
+                        
+                        <img id="sujo" class="tamagotchi" src="">
+                        
+                        <img id="roupa" class="tamagotchi" src="">
+                        <img id="chapeu" class="tamagotchi" src="">
+                        
+                        <img id="acao" class="tamagotchi" src="">
+
+                        <br>
+                        <span class="btn">
+
+                            <button class="left" onclick="trocarE()">
+                                <strong>
+                                    <svg class="svgLR" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+                                </strong>
+                            </button>
+                            <button class="right" onclick="trocarD()">
+                                <strong>
+                                    <svg class="svgLR" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+                                </strong>
+                            </button>
+                        </span>
+
+                        <div class="bottom-buttons" id="botoesbaixo">
+                            <button class="btn" onclick="cafune()"><img src="imagens/iconecafune.png"><img/button>
+                        </div>
+                        `;
+
+                        document.getElementById("cacada").innerHTML = `
+                        
+                        `
+
+                        document.getElementById("menu").innerHTML = `
+                        <div class="nome">${car.nome}</div>
+                        
+
+                        <div class="bars-container">
+                            <div class="bar-wrapper">
+                            <div class="icon">🍔</div>
+                            <div class="bar"><div class="fill1" id="fill1"></div></div>
+                            </div>
+                            <div class="bar-wrapper">
+                            <div class="icon">❤️</div>
+                            <div class="bar"><div class="fill2" id="fill2"></div></div>
+                            </div>
+                            <div class="bar-wrapper">
+                            <div class="icon">🧼</div>
+                            <div class="bar"><div class="fill3" id="fill3"></div></div>
+                            </div>
+                            <div class="bar-wrapper">
+                            <div class="icon">😁</div>
+                            <div class="bar"><div class="fill4" id="fill4"></div></div>
+                            </div>
+                            <div class="bar-wrapper">
+                            <div class="icon">😴</div>
+                            <div class="bar"><div class="fill5" id="fill5"></div></div>
+                            </div>
+                        </div>
+
+
+                        <div class="opcao-container">
+                            <button class="opcaoM" onclick="eventLoja()">LOJA</button>
+                            <button class="opcaoM" onclick="eventCar()">${car.nome.toUpperCase()}</button>
+                            <button class="opcaoM" onclick="eventCacar()">CAÇAR</button>
+                        </div>
+                        
+                        <div id="money"><strong>Ratos: ${car.ratos}</strong></div>
+
+
+                        <button class="log" onclick="tabelaLog()">Log</button>
+                        <div id="tela">
+                            <div id="janela" class="janela" onclick="fecharTabela()">
+                                <div id="popup2">
+                                    <h2>Tabela de Log</h2>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>HORÁRIO</th>
+                                                <th>AÇÃO</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="corpo"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    }
+
+                    /*
+                        car.fome = 60;
+                        car.saude = 60;
+                        car.higiene = 60;
+                        car.felicidade = 60;
+                        car.sono = 0;
+                    */
+                    document.getElementById("fill1").style.width = `${car.fome}%`;
+                    document.getElementById("fill2").style.width = `${car.saude}%`;
+                    document.getElementById("fill3").style.width = `${car.higiene}%`;
+                    document.getElementById("fill4").style.width = `${car.felicidade}%`;
+                    document.getElementById("fill5").style.width = `${car.sono}%`;
+
+                    registrarAcao("Inicialização do Jogo");
+
+                    tempo();
+
+                    registrarAcao("Inicialização de tempo()");
+                }
+
+
+
+                /*-----------    LOG FEITO POR ARTHUR    ------------*/
+
+            
+                
+            /*REGISTRA O NOME*/
+		    function registrarAcao(nomeAcao)
+            {
+                const tabela = document.getElementById("corpo");
+                const horario = obterHorarioAtual();
+                const conteudo = `
+                    <tr>
+                        <td>${horario}</td>
+                        <td>${nomeAcao}</td>    
+                    </tr>
+                `
+                tabela.insertAdjacentHTML("afterbegin", conteudo);
+                
+            }
+            /*OBTEM O HORARIO ATUAL*/
+            function obterHorarioAtual() 
+            {
+                    const agora = new Date();
+                    const horas = agora.getHours().toString().padStart(2, "0");
+                    const minutos = agora.getMinutes().toString().padStart(2, "0");
+                    const segundos = agora.getSeconds().toString().padStart(2, "0");
+                    return `${horas}:${minutos}:${segundos}`;
+            }
+
+            /*FAZ A TABELA  APARECER*/
+		    function tabelaLog()
+            {
+                registrarAcao("Abrir tabela de Log");
+                tela.classList.add("active");
+                const janela = document.getElementById("tela");
+                const popup = document.getElementById("popup2");
+                janela.style.display = "flex";
+            }
+
+            /*FECHA A TABELA*/
+            function fecharTabela()
+            {
+                registrarAcao("Fechar tabela de Log");
+                tela.classList.remove("active");
+                const janela = document.getElementById("tela");
+                const popup = document.getElementById("popup2");
+                janela.style.display = "none"; 
+            }
+            
+        </script>
+    </body>
+</html>
