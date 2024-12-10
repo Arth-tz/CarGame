@@ -1,0 +1,60 @@
+#screen
+        {
+            font-family: 'Comic Sans MS', cursive;
+            display: flex;
+            justify-content: end;
+            height: 100vh;
+        }
+        #popup
+        {
+            background-color: rgba(0, 136, 254, 0.395);;
+            width: 60%;
+            height: 99vh;
+            padding: 5px;
+            border-radius: 0px 6px 6px 6px;
+            
+            
+        }
+        #opcoes
+        {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            border-radius:0px 6px 6px 6px;
+            background-color: rgba(0, 123, 255, 0.571);
+        }
+        button
+        {
+            background: none;
+            border: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+        img
+        {
+            max-width: 150px;
+        }
+        #lista
+        {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+           
+            
+        }
+        .itens
+        {
+            background-color: rgba(98, 182, 255, 0.636);
+            border: rgba(0, 123, 255, 0.571) 3px solid;
+            border-radius: 2px;
+            padding: 20px;
+            justify-items: center;
+        }
+        .btnLista :hover
+        {
+            background-color:  rgba(48, 158, 255, 0.636);
+        }
+        .itemImg
+        {
+            max-height: 100px;
+        }

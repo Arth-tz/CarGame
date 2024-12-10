@@ -1,0 +1,111 @@
+
+    @font-face {
+    font-family:fonteJogo;
+    src: url('adbxtra.ttf');
+    }
+    body {
+    font-family: fonteJogo;
+    background-image: url('imagens/Captura de tela 2024-11-29 104353.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+    }
+
+    p{
+        pointer-events: none;
+    }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+  }
+  
+  .titulo {
+    font-family:fonteJogo;
+    font-size: 120px;
+    justify-content: center;
+    align-items: center;
+    display: flex;    
+    margin-top:10px;
+    margin-bottom: 50px;
+    pointer-events: none;
+    
+  }
+  
+  .formulario {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 590px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    font-family: 'Comic Sans MS', cursive;
+}
+
+.formulario img {
+    max-width: 150px;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #fff;
+    pointer-events: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; 
+    width: 100%;
+}
+
+  
+  form p {
+    font-size: 18px;
+    }
+  
+  form label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    
+  }
+  
+  input{
+    width: 250px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: black 2px solid;
+    border-radius: 5px;
+    font-family: 'Comic Sans MS', cursive;
+  }
+  select{
+    width: 275px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: black 2px solid;
+    border-radius: 5px;
+    font-family: 'Comic Sans MS', cursive;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    border:#4d3e02 3px solid;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 35px;
+    margin-top: 55px;
+    color: #1f1901;
+    font-family: fonteJogo;
+  }
+  
+  button:hover {
+    background-color: #ffaa00;
+  }

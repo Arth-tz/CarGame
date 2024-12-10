@@ -1,0 +1,882 @@
+@font-face {
+    font-family:FunnyFont;
+    src: url('comic-sans-ms-4.ttf');
+}
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #79b3ca;
+    position: relative;
+    font-family: FunnyFont;
+}
+
+#fundo{
+    position: absolute;
+    top: 0px;
+    margin: 0;
+    right: 0px;
+    height: 100vh;
+    width: 60%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.tamagotchi {
+    max-width: 100%;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    bottom: 12.5%;                                                                                   
+    right: 15%;
+    width: 30%;
+    max-height: 100%;
+    pointer-events: none;
+}
+
+#cadeira{
+    max-width: 100%;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    bottom: 0%;
+    right: 15%;
+    width: 30%;
+    max-height: 100%;
+    pointer-events: none;
+}
+
+.btn button {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 65px;
+    height: 65px;
+    border: none;
+    border-radius: 50%;
+    background-color: #e8e8e9;
+    color: black;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align:center;
+    font-size: 2rem;
+    font-family: FunnyFont;
+}
+
+.btn button:hover {
+    background-color: #8a8b8b;
+}
+
+.left {
+    left: 45%;
+}
+
+.right {
+    right: 5%;
+}
+
+/*-------------------------------------------------------------------*/
+
+.bars-container {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    transform: translateX(-50%);
+    width: 35%; /*largura das barras*/
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.bar-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 30px; 
+    height: 30px; 
+    margin-right: 10px; 
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    pointer-events: none;
+}
+
+/*estilo das barras*/
+.bar {
+    position: relative;
+    flex-grow: 1;
+    height: 20px;
+    border: 2px solid #333;
+    background-color: #333;
+    overflow: hidden;
+}
+
+.bar .fill1 {
+    height: 100%;
+    background-color: #be7e33;
+    width: 70%; /*valor preenchido (pode ser ajustado)*/
+}
+.bar .fill2 {
+    height: 100%;
+    background-color: #ec4d4d;
+    width: 70%; /*valor preenchido*/
+}
+.bar .fill3 {
+    height: 100%;
+    background-color: #7be9ec;
+    width: 70%; /*valor preenchido*/
+}
+.bar .fill4 {
+    height: 100%;
+    background-color: #e7e966;
+    width: 70%; /*valor preenchido*/
+}
+.bar .fill5 {
+    height: 100%;
+    background-color: #c879d8; 
+    width: 70%; /*valor preenchido*/
+}
+
+/*botões na parte inferior*/
+.bottom-buttons {
+    position: fixed;
+    bottom: 3%;
+    left: 70%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 100px;
+}
+
+.nome{
+    position: absolute;
+    top: 2%;
+    left: 3%;
+    font-size: 30px;
+    padding: 2px;
+    width: 33%;
+    background-color: white;
+    border: 4px solid black;
+    text-align: center;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.nome:hover {
+    background-color: #8a8b8b;
+}
+
+.opcao-container{
+    position: absolute;
+    left: 3%;
+    top: calc(10% + 250px);
+    width: 34%;
+    height: 18%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5%;
+    justify-content: center;
+    flex-grow: 1;
+        
+}
+
+
+.opcao-container button{
+    border: 4px solid black;
+    font-family: FunnyFont;
+    font-size: 20px;
+    background-color: #e8e8e9;
+    color: black;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.opcao-container button:hover {
+    background-color: #8a8b8b;
+}
+
+.opcao-container .opcaoM{
+    width: 95%;
+}
+
+.bottom-buttons button {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+.bottom-buttons button img{
+    height: 105%;
+    pointer-events: none;
+}
+.bottom-buttons button:hover{
+    background-color: #8a8b8b;
+}
+
+#money{
+    position: absolute;
+    border: 4px solid black;
+    font-family: FunnyFont;
+    font-size: 40px;
+    background-color: #e9e8e8;
+    color: black;
+    width: 15%;
+    left: 4%;
+    bottom: 10%;
+    pointer-events: none;
+}
+
+#money:hover {
+    background-color: #8a8b8b;
+}
+
+.svgLR{
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    top: 5px;
+    right: 27%;
+    width: 160%;
+}
+
+#cacadafundo{
+    position: absolute;
+    top: 0px;
+    margin: 0;
+    right: 0px;
+    height: 100vh;
+    width: 60%;
+
+}
+
+#ratocontainer{
+    position: absolute;
+    top: 0px;
+    margin: 0;
+    right: 0px;
+    height: 100vh;
+    width: 60%;
+    overflow: hidden;
+}
+
+#patacontainer{
+    position: absolute;
+    top: 0px;
+    margin: 0;
+    right: 0px;
+    height: 100vh;
+    width: 60%;
+    overflow: hidden;
+}
+
+#rato{
+    position: absolute;
+    z-index: 3;
+    border-radius: 50%;
+    width: 30%;
+    height: 30%;
+    cursor: pointer;
+
+    background: transparent;
+    border: none;
+    /*
+    background: white;
+    border: 2px solid red;
+    */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    top: 10%;
+    right: 10%;
+}
+
+#pata{
+    position: absolute;
+    z-index: 4;
+    border-radius: 50%;
+    width: 30%;
+    height: 30%;
+
+    background: transparent;
+    border: none;
+    /*
+    background: white;
+    border: 2px solid red;
+    */
+
+    display: fixed;
+
+    top: 10%;
+    right: 10%;
+}
+
+#ratoimg{
+    width: 100%;
+    margin: -100%;
+    pointer-events: none;
+}
+
+#pataimg{
+    z-index: 4;
+    width: 100%;
+    top: 400%;
+    margin: 0%;
+    pointer-events: none;
+}
+
+#sono{
+    position: absolute;
+    color: white;
+    background: #333;
+    font-family: FunnyFont;
+    text-align: center;
+
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 20;
+
+    top: 0%;
+    left:0%;
+    width: 100%;
+    height:100%;
+}
+
+#sono button{
+    margin: 50px;
+    background: white;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 15px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border: transparent;
+    border-radius: 10px;
+    font-family: FunnyFont;
+}
+
+#sono button:hover{
+    background: gray;
+}
+
+#lojacontainer{
+    position: absolute;
+    top: 0px;
+    margin: 0;
+    right: 0px;
+    height: 100vh;
+    width: 60%;
+    overflow: hidden;
+}
+
+#lojafundo{
+    position: absolute;
+    top: 0%;
+    height: 100vh;
+    width: 100%;
+    pointer-events: none;
+}
+
+#btncleiton{
+    position: absolute;
+    z-index: 5;
+    background: transparent;
+    height: 450px;
+    width: 60%;
+    top: 100px;
+    right: 2%;
+    border-radius: 50%;
+    cursor: pointer;
+    border: transparent;
+
+
+    display: flex;
+    align-items: none;
+    justify-content: center;
+}
+
+#popupcontainer2{
+    position: absolute;
+    top: 0px;
+    margin: 0;
+    right: 0px;
+    height: 100%;
+    width: 60%;
+    overflow: hidden;
+    z-index: 13;
+
+    background-color: transparent;
+
+    
+}
+    
+#popupcontainer2 button{
+    position: absolute;
+    top: 0px;
+    margin: 0;
+    right: 0px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 14;
+    background: transparent;
+    border: transparent;
+
+    cursor: pointer;
+}
+
+#fala{
+    position: fixed;
+    border: 5px solid black;
+
+    background-color: rgba(255, 255, 255, 0.75);
+
+    height: 40%;
+    width: 50%;
+    right: 5%;
+    bottom: 5%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#fala p{
+    padding: 30px;
+    color: black;
+    font-size: 30px;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#cleiton, #cleitonselect, #catalog, #catalogselect{
+    position: absolute;
+    width: 100%;
+    top: 0%;
+    right: 0%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+#cleitonselect, #catalogselect{
+    display: none;
+}
+
+#btncatalog{
+    position: absolute;
+    z-index: 12;
+    background: transparent;
+    height: 150px;
+    width: 30%;
+    top: 450px;
+    right: 62%;
+    border-radius: 50%;
+    cursor: pointer;
+    border: transparent;
+
+    display: flex;
+    align-items: none;
+    justify-content: center;
+}
+
+#btncatalog:hover ~ #catalogselect{
+    display: block;
+}
+
+#btncleiton:hover ~ #cleitonselect{
+    display: block;
+}
+
+#popupcontainer{
+    position: absolute;
+    top: 0px;
+    margin: 0;
+    right: 0px;
+    height: 100%;
+    width: 60%;
+    overflow: hidden;
+    z-index: 13;
+
+    background-color: rgba(47, 134, 216, 0.589);
+}
+
+#opcoes{
+    width:100%;
+    height: 25%;
+    right: 0px;
+    top: 0px;
+    
+    background-color: rgba(153, 193, 231, 0.466);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#opcoes button{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: transparent;
+    background-color: #e8e8e9;
+    color: black;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align:center;
+    font-size: 2rem;
+    font-family: FunnyFont;
+}
+
+#opcoes button:hover {
+    background-color: #8a8b8b;
+}
+
+#opcoes button img{
+    width: 110%;
+    
+    pointer-events: none;
+}
+
+#prod{
+    width: 100%;
+    height: 75%;
+    top: 25%;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    gap: 30px;
+
+    overflow-y: auto;
+}
+
+#prod button{
+    height: 200px;
+    width: 175px;
+    border: transparent;
+    border: 5px solid black;
+    background-color: #e8e8e9;
+    color: black;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align:center;
+    font-size: 2rem;
+    font-family: FunnyFont;
+    gap: 0px;
+
+    overflow: hidden;
+}
+
+#prod button p{
+    margin: 2px;
+    margin-top: 2px;
+    width: 100%;
+    height: 20%;
+    font-size: 20px;
+    pointer-events: none;
+}
+
+#prod button img{
+    height:60%;
+    width: 80%;
+    margin: 0px;
+    background: rgb(48, 48, 48);
+    border: 3px solid black;
+    pointer-events: none;
+}
+
+#prod button:hover {
+    background-color: #8a8b8b;
+}
+
+/*------------------------------------------------------------*/
+#sairinv{
+    position: absolute;
+    top: 3%;
+    right: 3%;
+
+    height: 125px;
+    width: 125px;
+    border-radius: 50%;
+    border: transparent;
+    background-color: #e8e8e9;
+
+    color: black;
+    cursor: pointer;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align:center;
+
+    font-size: 2rem;
+    font-family: FunnyFont;
+}
+
+#sairinv img{
+    pointer-events: none;
+}
+
+#sairinv:hover {
+    background-color: #8a8b8b;
+}
+
+#itens{
+    height: 80%;
+    width: 100%;
+    margin-top: 20%;
+    border: transparent;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    overflow-y: auto;
+}
+
+#itens div{
+    height: 200px;
+    width: 175px;
+    border: transparent;
+    border: 5px solid black;
+    background-color: #e8e8e9;
+    color: black;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align:center;
+    
+    font-size: 2rem;
+    font-family: FunnyFont;
+    gap: 0px;
+
+    overflow: hidden;
+}
+
+#itens div p{
+    margin: -10px;
+    margin-top: 2px;
+    width: 100%;
+    height: 20%;
+    font-size: 20px;
+    pointer-events: none;
+}
+
+#itens div img{
+    height:60%;
+    width: 80%;
+    margin: 0px;
+    background: rgb(48, 48, 48);
+    border: 3px solid black;
+    pointer-events: none;
+}
+
+.botaoPaia{
+    width: 90%;
+    border: transparent;
+    margin: 5px;
+    background-color: rgb(128, 0, 0);
+    color: white;
+    font-family: FunnyFont;
+    font-size: 17.5px;
+
+    cursor: pointer;
+}
+.botaoPaia:hover{
+    background-color: rgb(73, 0, 0);
+}
+
+.botaoLegal{
+    width: 90%;
+    border: transparent;
+    margin: 5px;
+    background-color: green;
+    color: white;
+    font-family: FunnyFont;
+    font-size: 17.5px;
+
+    cursor: pointer;
+}
+
+.botaoLegal:hover{
+    background-color: rgb(0, 73, 0);
+}
+
+#itens > p{
+    font-size: 50px;
+    color: white;
+    text-align: center;
+}
+
+
+/*-------------------------------------------------------*/
+
+
+.log
+{
+    position: absolute;
+    border: 4px solid black;
+    border-radius: 2px;
+    width: 6%;
+    left: 4%;
+    bottom: 3%;
+    cursor: pointer;
+    font-family: FunnyFont;
+}
+
+.log:hover
+{
+    background-color:#8a8b8b ;
+}
+
+#tela
+{
+    display: none;
+}
+#janela
+{
+    background-color: #000000b5;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+#popup2
+{
+    visibility: hidden;
+    display: block;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(232, 244, 254, 0.921);
+    backdrop-filter: blur(10px);
+    overflow: auto;
+    position: fixed;
+    width: 800px;
+    height: 500px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    text-align: center;
+
+}
+
+#tela.active #popup2
+{
+    visibility: visible;
+}
+
+
+.fechar
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 8px 12px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 65, 65);
+    border: none;
+}
+#popup2 h2 {
+    font-size: 30px;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #a3a3a3;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+   
+}
+
+table tbody {
+    display: block;
+    height: 350px;
+    overflow-y: auto;
+}
+
+table thead, table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; 
+ 
+}
+table thead
+{
+    background-color: rgb(197, 197, 197);
+}
+
+table th, table td {
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
